@@ -4,7 +4,7 @@
 
 <h1>Service Continuity Calendar Platform</h1>
 
-<p><strong>The Strategic Operational Control Plane for Planning, Coordinating, and Optimizing Global Maintenance, DR, and Resilience Events at Enterprise Scale</strong></p>
+<p><strong>The Strategic Operational Control Plane for Planning, Coordinating, and Optimizing Global Maintenance, DR, and Resilience Events at Enterprise Scale.</strong></p>
 
 [![Standard: Operational Excellence](https://img.shields.io/badge/Standard-Operational--Excellence-blue.svg?style=for-the-badge&labelColor=000000)]()
 [![Status: Production--Ready](https://img.shields.io/badge/Status-Production--Ready-emerald.svg?style=for-the-badge&labelColor=000000)]()
@@ -13,7 +13,7 @@
 <br/>
 
 > **"Resilience is not a state, it is a continuous operation."** 
-> Service Continuity Calendar (Continuity-Ops) is an enterprise-grade platform designed to provide a secure, measurable, and highly automated foundation for global operational event governance. It orchestrates the complex lifecycle of maintenance windows, disaster recovery tests, and patching cycles—from time-based event scheduling and automated conflict detection to service impact analysis and role-based approval workflows. By providing a centralized calendar with real-time risk scoring, stakeholder notifications, and immutable audit trails, it enables organizations to eliminate operational silos, reduce the risk of change-related outages, and ensure consistent service availability across every tier of the global infrastructure.
+> **Service Continuity Calendar (Continuity-Ops)** is an enterprise-grade platform designed to provide a secure, measurable, and highly automated foundation for global operational event governance. It orchestrates the entire lifecycle—from time-based event scheduling and automated conflict detection to service impact analysis and role-based approval workflows.
 
 </div>
 
@@ -21,406 +21,246 @@
 
 ## 🏛️ Executive Summary
 
-Modern enterprise operations require extreme coordination across distributed teams. Organizations fail to maintain uptime not because of a lack of technical skill, but because of fragmented schedules, unmanaged event conflicts, and a lack of visibility into how overlapping maintenance windows impact critical service dependencies.
+Modern enterprise operations require extreme coordination across distributed teams. Organizations often fail to maintain uptime not because of a lack of technical skill, but because of fragmented schedules and unmanaged event conflicts that lead to overlapping maintenance windows and service-level contention.
 
-This platform provides the **Operational Coordination Plane**. It implements a complete **Continuity Intelligence Framework**—from automated conflict detection and impact modeling to a specialized governance workflow and real-time operational heatmap. By operationalizing service continuity planning, it ensures that your maintenance events are not just scheduled, but continuously analyzed for risk, coordinated for efficiency, and governed with strategic precision.
+This platform provides the **Operational Coordination Plane**. It implements a complete **Continuity Intelligence Framework**, enabling SRE and Infrastructure teams to manage operational events as a first-class citizen. By automating the detection of conflicts and the notification of stakeholders, we ensure that maintenance activities are not just scheduled, but continuously analyzed for risk, coordinated for efficiency, and governed with strategic precision.
+
+---
+
+## 📐 Architecture Storytelling: Principal Reference Models
+
+### 1. Principal Architecture: Global Service Continuity & Event Orchestration Plane
+This diagram illustrates the end-to-end flow from initial event proposal and conflict detection to automated stakeholder notification and forensic operational auditing.
+
+```mermaid
+graph LR
+    %% Subgraph Definitions
+    subgraph EventPlanning["Event Planning Hub"]
+        direction TB
+        Prop["Propose Maintenance / DR Event"]
+        Schedule["Time-Interval Scheduling"]
+        Impact["Service Impact Modeling"]
+    end
+
+    subgraph IntelligenceEngine["Continuity Intelligence Hub"]
+        direction TB
+        API["FastAPI Continuity Gateway"]
+        Conflict["Temporal Conflict Detector"]
+        Risk["Risk & Resilience Scorer"]
+        Inventory["Global Operational Registry"]
+    end
+
+    subgraph GovernancePlane["Institutional Governance Hub"]
+        direction TB
+        Approval["RBAC Approval Workflow"]
+        Blackout["Blackout Window Enforcement"]
+        Policy["Compliance & BCM Policy"]
+    end
+
+    subgraph CommunicationHub["Multi-Channel Notification Hub"]
+        direction TB
+        Email["Enterprise Email (SES)"]
+        Chat["Chat Ops (Slack/Teams)"]
+        Incident["Incident Response (PagerDuty)"]
+        Status["Public Status Page Sync"]
+    end
+
+    subgraph DevOps["Continuity-as-Code Orchestration"]
+        direction TB
+        GitOps["GitOps Event Definitions"]
+        TF["Terraform Continuity Modules"]
+        Audit["Forensic Continuity Lake"]
+    end
+
+    %% Flow Arrows
+    EventPlanning -->|1. Propose Event| API
+    API -->|2. Check Overlaps| Conflict
+    Conflict -->|3. Score Risk| Risk
+    Risk -->|4. Validate Governance| GovernancePlane
+    
+    GovernancePlane -->|5. Authorise| CommunicationHub
+    CommunicationHub -->|6. Notify Stakeholders| EventPlanning
+    CommunicationHub -->|7. Update Status| Status
+    
+    API -->|8. Visualize Heatmap| IntelligenceEngine
+    GitOps -->|9. Commit Windows| API
+    TF -->|10. Provision Hub| IntelligenceEngine
+    API -->|11. Record Audit| Audit
+
+    %% Styling
+    classDef planning fill:#f5f5f5,stroke:#616161,stroke-width:2px;
+    classDef intel fill:#ede7f6,stroke:#311b92,stroke-width:2px;
+    classDef governance fill:#e3f2fd,stroke:#0d47a1,stroke-width:2px;
+    classDef communication fill:#fce4ec,stroke:#880e4f,stroke-width:2px;
+    classDef devops fill:#fffde7,stroke:#f57f17,stroke-width:2px;
+
+    class EventPlanning planning;
+    class IntelligenceEngine intel;
+    class GovernancePlane governance;
+    class CommunicationHub communication;
+    class DevOps devops;
+```
+
+### 2. The Continuity Lifecycle Management Flow
+The continuous path for planning and executing high-integrity maintenance and DR events.
+
+```mermaid
+graph LR
+    Plan["Plan & Analyze Impact"] --> Schedule["Conflict-Free Scheduling"]
+    Schedule --> Notify["Automated Stakeholder Alert"]
+    Notify --> Execute["Operational Execution"]
+    Execute --> Audit["Forensic Post-Mortem Review"]
+```
+
+### 3. Conflict Detection Engine Logic
+Visualizing the spatial-temporal overlap check used to prevent service contention.
+
+```mermaid
+graph LR
+    E1["Event A (Service 1, 10am)"] --- Hub["Conflict Engine"]
+    E2["Event B (Service 1, 11am)"] --- Hub
+    Hub -->|Overlap Detected| Block["Trigger Remediation / Reschedule"]
+    Hub -->|Clear| Allow["Authorize Maintenance Window"]
+```
+
+### 4. Multi-Channel Stakeholder Notification Hub
+Ensuring that every impacted team is informed through their preferred organizational channel.
+
+```mermaid
+graph LR
+    Event["Approved Event"] --> Hub["Notification Router"]
+    Hub -->|Email| Stakeholders["Service Owners"]
+    Hub -->|Slack| Teams["Operations Channels"]
+    Hub -->|PagerDuty| OnCall["SRE / Support Teams"]
+```
+
+### 5. Service Dependency & Impact Mapping
+Linking calendar events to the underlying tiered architecture to predict blast radius.
+
+```mermaid
+graph TD
+    Event["Maintenance: DB Patch"] --> Tier0["Tier 0: Core Identity"]
+    Event --> Tier1["Tier 1: Global API"]
+    Tier0 --> Impact["High Risk / Blast Radius Alert"]
+    Tier1 --> Impact
+```
+
+### 6. BCDR Drill & Exercise Orchestration
+Using the continuity platform to plan, track, and score institutional resilience exercises.
+
+```mermaid
+graph LR
+    Drill["Propose DR Drill"] --> Setup["Provision Sandbox Env"]
+    Setup --> Execution["Run Simulation"]
+    Execution --> Score["Resilience Scorecard Generated"]
+```
+
+### 7. Maintenance Window Governance (Tiered)
+Enforcing organizational windows based on service criticality and business impact.
+
+```mermaid
+graph TD
+    Hub["Window Policy Hub"] --> P0["Tier 0: Weekends Only"]
+    Hub --> P1["Tier 1: Off-Peak Hours"]
+    Hub --> P2["Tier 2: Business Hours Allowed"]
+```
+
+### 8. Identity & RBAC for Continuity Governance
+Managing who has the authority to approve high-risk changes and freeze windows.
+
+```mermaid
+graph TD
+    Lead["Operations Lead"] --> Freeze["Global Window Freeze"]
+    Owner["Service Owner"] --> Propose["Event Proposal"]
+    Admin["Governance Admin"] --> Policy["Compliance Policy Mgmt"]
+```
+
+### 9. Real-Time Status Page Integration
+Synchronizing the continuity calendar with external communication portals.
+
+```mermaid
+graph LR
+    Event["Live Maintenance Start"] --> Sync["Status Page API"]
+    Sync --> Portal["Public Status Portal (Banner)"]
+    Portal --> Users((Stakeholder Visibility))
+```
+
+### 10. IaC Deployment: Continuity-as-Code
+Using Terraform or YAML to version-control the entire operational schedule.
+
+```mermaid
+graph LR
+    HCL["Event Definitions (HCL)"] --> TF["Terraform Apply"]
+    TF --> Obj["Calendar & Rule Objects"]
+    Obj --> Live["Live Operational Hub"]
+```
+
+### 11. Metadata Lake for Forensic Continuity Audit
+Storing long-term records of every maintenance action for regulatory compliance and trends.
+
+```mermaid
+graph LR
+    Event["Operational Action"] --> Stream["Forensic Stream"]
+    Stream --> Lake["Continuity Metadata Lake"]
+    Lake --> Trends["Maintenance Velocity Analysis"]
+```
 
 ---
 
 ## 🏛️ Core Continuity Pillars
 
-1. **Centralized Operational Registry**: Single source of truth for all global maintenance, patching, DR, and change events.
-2. **High-Fidelity Conflict Detection**: Automated identification of overlapping windows and resource contention across service dependencies.
-3. **Advanced Impact Analysis**: Risk-based scoring of operational events to predict downtime probability and service degradation.
-4. **Governance & Approval Engine**: Standardized multi-stage approval workflows that enforce role-based change control.
-5. **Stakeholder Notification Hub**: Automated reminders, escalations, and status updates for impacted teams and service owners.
-6. **Immutable Operational Audit**: Comprehensive logging of every scheduling action, approval, and conflict resolution for organizational transparency.
-
----
-
-## 📐 Architecture Storytelling: 50+ Advanced Diagrams
-
-### 1. The Operational Event Lifecycle
-*The flow from proposal to post-implementation review.*
-```mermaid
-graph TD
-    subgraph "Planning"
-        Prop[Propose Event]
-        Analyze[Impact Analysis]
-        Conflict[Conflict Detection]
-    end
-
-    subgraph "Governance"
-        Approve[Approval Workflow]
-        Notify[Stakeholder Notification]
-    end
-
-    subgraph "Execution"
-        Start[Event Window Start]
-        Work[Maintenance/DR Work]
-        End[Event Window End]
-        Audit[Audit & Reporting]
-    end
-
-    Prop -->|1. Request| Analyze
-    Analyze -->|2. Check| Conflict
-    Conflict -->|3. Route| Approve
-    Approve -->|4. Confirm| Notify
-    Notify -->|5. Trigger| Start
-    Start -->|6. Execute| Work
-    Work -->|7. Close| End
-    End -->|8. Log| Audit
-```
-
-### 2. Conflict Detection Logic Topology
-*Visualizing how overlaps are identified.*
-```mermaid
-graph LR
-    Proposed[Proposed Event] --> TCheck{Time Overlap?}
-    TCheck -->|Yes| SCheck{Service Overlap?}
-    TCheck -->|No| Safe[Window Clear]
-    SCheck -->|Yes| Conflict[Resource Contention]
-    SCheck -->|No| Warning[Window Overlap]
-```
-
-### 3. Service Impact Scoring Model
-```mermaid
-graph TD
-    Event[Event Metadata] --> Dur[Duration Factor]
-    Event --> Count[Service Count]
-    Event --> Tier[Service Tiering]
-    Dur & Count & Tier --> Calc[Impact Engine]
-    Calc --> Score[Risk Score 0-100]
-```
-
-### 4. Continuity Hub Architecture
-```mermaid
-graph LR
-    UI[React Web] --> API[FastAPI Gateway]
-    API --> Cache[(Redis Cache)]
-    API --> DB[(Postgres Continuity DB)]
-    API --> Engine[Conflict & Impact Engines]
-```
-
-### 5. Deployment Topology: Multi-Region Coordination Hub
-```mermaid
-graph LR
-    LB[Load Balancer] --> API[FastAPI Cluster]
-    API --> Queue[(Redis Task Queue)]
-    Queue --> W[Continuity Workers]
-    W --> DB[(Postgres HA Cluster)]
-```
-
-### 6. Event Notification Flow
-```mermaid
-graph LR
-    Event[Event State Change] --> Hub[Notification Hub]
-    Hub --> Email[Email Service]
-    Hub --> Slack[Slack / Teams]
-    Hub --> Pager[PagerDuty / OpsGenie]
-```
-
-### 7. Foundation: Multi-Environment Setup
-```mermaid
-graph LR
-    F[Foun] --> M[Mult]
-```
-
-### 8. Networking: Secure Continuity Tunnels
-```mermaid
-graph LR
-    N[Netw] --> S[Secu]
-```
-
-### 9. Component: Calendar Engine
-```mermaid
-graph LR
-    C[Comp] --> C[Cale]
-```
-
-### 10. Component: Conflict Engine
-```mermaid
-graph LR
-    C[Comp] --> C[Conf]
-```
-
-### 11. Component: Impact Engine
-```mermaid
-graph LR
-    C[Comp] --> I[Impa]
-```
-
-### 12. Component: Approval Engine
-```mermaid
-graph LR
-    C[Comp] --> A[Appr]
-```
-
-### 13. Logic: Time Interval Solver
-```mermaid
-graph LR
-    L[Logi] --> T[Time]
-```
-
-### 14. Logic: Dependency Graph Resolver
-```mermaid
-graph LR
-    L[Logi] --> D[Depe]
-```
-
-### 15. Logic: Risk Weighting Logic
-```mermaid
-graph LR
-    L[Logi] --> R[Risk]
-```
-
-### 16. Logic: Notification Escalation
-```mermaid
-graph LR
-    L[Logi] --> N[Noti]
-```
-
-### 17. Architecture: Global Coordination Plane
-```mermaid
-graph LR
-    A[Arch] --> G[Glob]
-```
-
-### 18. Architecture: Event-Driven Resilience
-```mermaid
-graph LR
-    A[Arch] --> E[Even]
-```
-
-### 19. Architecture: Distributed Scheduler
-```mermaid
-graph LR
-    A[Arch] --> D[Dist]
-```
-
-### 20. Pattern: Maintenance-as-Code
-```mermaid
-graph LR
-    P[Patt] --> M[Main]
-```
-
-### 21. Pattern: Automated DR Scheduling
-```mermaid
-graph LR
-    P[Patt] --> A[Auto]
-```
-
-### 22. Pattern: Blackout Window Enforcement
-```mermaid
-graph LR
-    P[Patt] --> B[Blac]
-```
-
-### 23. Security: Signed Change Records
-```mermaid
-graph LR
-    S[Secu] --> S[Sign]
-```
-
-### 24. Security: RBAC Approval Flow
-```mermaid
-graph LR
-    S[Secu] --> R[RBAC]
-```
-
-### 25. Security: Secure Operational Audit
-```mermaid
-graph LR
-    S[Secu] --> S[Secu]
-```
-
-### 26. Feature: Event Heatmap Visualizer
-```mermaid
-graph LR
-    F[Feat] --> E[Even]
-```
-
-### 27. Feature: Service Impact Matrix
-```mermaid
-graph LR
-    F[Feat] --> S[Serv]
-```
-
-### 28. Feature: Auto-generated Status Report
-```mermaid
-graph LR
-    F[Feat] --> A[Auto]
-```
-
-### 29. Compliance: NIST Continuity Standards
-```mermaid
-graph LR
-    C[Comp] --> N[NIST]
-```
-
-### 30. Compliance: ISO 22301 BCM
-```mermaid
-graph LR
-    C[Comp] --> I[ISO]
-```
-
-### 31. Infrastructure: Redis Event Cache
-```mermaid
-graph LR
-    I[Infr] --> R[Redi]
-```
-
-### 32. Infrastructure: Postgres Operational DB
-```mermaid
-graph LR
-    I[Infr] --> P[Post]
-```
-
-### 33. Deployment: Kubernetes Continuity Pods
-```mermaid
-graph LR
-    D[Depl] --> K[Kube]
-```
-
-### 34. Deployment: Multi-Region Event Sync
-```mermaid
-graph LR
-    D[Depl] --> M[Mult]
-```
-
-### 35. Monitoring: Scheduling Velocity KPI
-```mermaid
-graph LR
-    M[Moni] --> S[Sche]
-```
-
-### 36. Monitoring: Conflict Resolution Rate
-```mermaid
-graph LR
-    M[Moni] --> C[Conf]
-```
-
-### 37. UI: Calendar Dashboard View
-```mermaid
-graph LR
-    U[UI] --> C[Cale]
-```
-
-### 38. UI: Conflict Analysis Pane
-```mermaid
-graph LR
-    U[UI] --> C[Conf]
-```
-
-### 39. UI: Service Impact Graph
-```mermaid
-graph LR
-    U[UI] --> S[Serv]
-```
-
-### 40. UI: Governance Workflow Dashboard
-```mermaid
-graph LR
-    U[UI] --> G[Gove]
-```
-
-### 41. CI/CD: Event validation pipeline
-```mermaid
-graph LR
-    C[CICD] --> E[Even]
-```
-
-### 42. CI/CD: Notification test pipeline
-```mermaid
-graph LR
-    C[CICD] --> N[Noti]
-```
-
-### 43. Strategy: Fail-Safe Scheduling
-```mermaid
-graph LR
-    S[Stra] --> F[Fail]
-```
-
-### 44. Strategy: Data-Driven Resilience
-```mermaid
-graph LR
-    S[Stra] --> D[Data]
-```
-
-### 45. Feature: Multi-TZ Event Support
-```mermaid
-graph LR
-    F[Feat] --> M[Mult]
-```
-
-### 46. Feature: DR Readiness Scorecard
-```mermaid
-graph LR
-    F[Feat] --> D[DR R]
-```
-
-### 47. Feature: Maintenance Window Analytics
-```mermaid
-graph LR
-    F[Feat] --> M[Main]
-```
-
-### 48. Logic: Recurrence Solver
-```mermaid
-graph LR
-    L[Logi] --> R[Recu]
-```
-
-### 49. Data Model: Event Entity
-```mermaid
-graph LR
-    D[Data] --> E[Even]
-```
-
-### 50. Enterprise Continuity Excellence
-```mermaid
-graph LR
-    E[Entr] --> C[Cont]
-```
+1.  **Centralized Operational Registry**: Single source of truth for all global maintenance, patching, DR, and change events.
+2.  **High-Fidelity Conflict Detection**: Automated identification of overlapping windows and resource contention across dependencies.
+3.  **Advanced Impact Analysis**: Risk-based scoring of operational events to predict downtime probability and service degradation.
+4.  **Governance & Approval Engine**: Standardized multi-stage approval workflows that enforce role-based change control.
+5.  **Stakeholder Notification Hub**: Automated reminders, escalations, and status updates for impacted teams.
+6.  **Immutable Operational Audit**: Comprehensive logging of every scheduling action, approval, and conflict resolution.
 
 ---
 
 ## 🛠️ Technical Stack & Implementation
 
 ### Continuity Engine & APIs
-- **Framework**: Python 3.11+ / FastAPI.
-- **Scheduling Engine**: Time-interval solver with multi-TZ and recurrence support.
-- **Conflict Engine**: Spatial-temporal overlap detector for service-level contention.
-- **Impact Engine**: Risk-based weighting model for service downtime prediction.
-- **Cache**: Redis for high-speed event indexing and notification brokering.
-- **Persistence**: PostgreSQL for event metadata, service maps, and audit trails.
-- **Identity**: OIDC / JWT with RBAC for granular change control and approval access.
+*   **Framework**: Python 3.11+ / FastAPI.
+*   **Scheduling Engine**: Time-interval solver with multi-TZ and recurrence support.
+*   **Conflict Engine**: Spatial-temporal overlap detector for service-level contention.
+*   **Impact Engine**: Risk-based weighting model for service downtime prediction.
+*   **State Management**: PostgreSQL (Metadata) and Redis (Event Cache).
 
-### Frontend (Continuity Dashboard)
-- **Framework**: React 18 / Vite.
-- **Theme**: Emerald / Slate (Modern SRE & Resilience aesthetic).
-- **Visualization**: Recharts for operational heatmaps and impact distributions.
+### Continuity Dashboard (UI)
+*   **Framework**: React 18 / Vite.
+*   **Theme**: Emerald / Slate (Modern SRE & Resilience aesthetic).
+*   **Visualization**: Recharts for operational heatmaps and impact distributions.
 
-### Infrastructure
-- **Runtime**: AWS EKS (Kubernetes).
-- **Deployment**: Helm charts for engines and worker distributions.
-- **IaC**: Terraform (Modular with Continuity focus).
+### Infrastructure & DevOps
+*   **Runtime**: AWS EKS or Azure Kubernetes Service (AKS).
+*   **IaC**: Modular Terraform for deploying the continuity hub and worker distributions.
+
+---
+
+## 🏗️ IaC Mapping (Module Structure)
+
+| Module | Purpose | Real Services |
+| :--- | :--- | :--- |
+| **`infrastructure/governance`** | Central management plane | EKS, PostgreSQL, Redis |
+| **`infrastructure/notifications`** | Multi-channel communication | SES, SNS, Slack API |
+| **`infrastructure/storage`** | Operational metadata and audit | RDS, S3 Glacier |
+| **`infrastructure/monitoring`** | Status page and health sync | Route53, StatusPage.io API |
 
 ---
 
 ## 🚀 Deployment Guide
 
-### Local Development
+### Local Principal Environment
 ```bash
-# Clone the repository
+# Clone the continuity platform
 git clone https://github.com/devopstrio/service-continuity-calendar.git
 cd service-continuity-calendar
 
-# Setup environment
+# Configure environment
 cp .env.example .env
 
-# Launch the Continuity stack (API, Workers, DB, Redis, UI)
+# Launch the Continuity stack
 make up
 
 # Run a sample scheduling simulation
@@ -429,9 +269,15 @@ make schedule-event
 # Run service impact analysis
 make analyze-impact
 ```
+
 Access the Service Continuity Dashboard at `http://localhost:3000`.
 
 ---
 
 ## 📜 License
 Distributed under the MIT License. See `LICENSE` for more information.
+
+---
+<div align="center">
+  <p>© 2026 Devopstrio. All rights reserved.</p>
+</div>
